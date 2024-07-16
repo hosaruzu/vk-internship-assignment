@@ -1,21 +1,27 @@
 //
-//  MenuView.swift
-//  kodeapp
+//  WeatherMenuView.swift
+//  vk-internship-assignment
 //
-//  Created by Artem Tebenkov on 04.05.2024.
+//  Created by Artem Tebenkov on 16.07.2024.
 //
 
 import UIKit
 
-final class WeatherSelectorView: UIView {
+final class WeatherMenuView: UIView {
 
     // MARK: - Callbacks
 
     var onSectionChange: ((Int) -> Void)?
+    var withAnimation = false
 
     // MARK: - Subviews
 
     private var collectionView: UICollectionView?
+    private var initialWeatherType: WeatherType = .clear
+
+    private let lineView = UIView()
+    private var widthConstraint = NSLayoutConstraint()
+    private var leadingConstraint = NSLayoutConstraint()
 
     // MARK: - Init
 
@@ -35,13 +41,14 @@ final class WeatherSelectorView: UIView {
     // MARK: - Public
 
     func selectItem(at row: Int, animated: Bool = true) {
-        collectionView?.selectItem(at: [0, row], animated: animated, scrollPosition: .centeredHorizontally)
+        initialWeatherType = WeatherType.allCases[row]
+        collectionView(collectionView ?? UICollectionView(), didSelectItemAt: [0, row])
     }
 }
 
 // MARK: - Setup collection view
 
-private extension WeatherSelectorView {
+private extension WeatherMenuView {
     func makeFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -55,8 +62,10 @@ private extension WeatherSelectorView {
 
     func setupCollectionViewAppearance() {
         guard let collectionView else { return }
+        collectionView.backgroundColor = .clear
         collectionView.bounces = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         collectionView.selectItem(at: [0, 0], animated: false, scrollPosition: [])
     }
 
@@ -64,23 +73,49 @@ private extension WeatherSelectorView {
         guard let collectionView else { return }
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(WeatherSelectorCell.self)
+        collectionView.register(WeatherMenuCell.self)
+    }
+
+    func move(originX: CGFloat, width: CGFloat) {
+        self.widthConstraint.constant = width
+        self.leadingConstraint.constant = originX
+        if withAnimation {
+            UIView.animate(withDuration: 0.4) {
+                self.layoutIfNeeded()
+            }
+        } else {
+            self.layoutIfNeeded()
+        }
+        withAnimation = true
     }
 }
 
 // MARK: - Setup subviews
 
-private extension WeatherSelectorView {
+private extension WeatherMenuView {
     func addSubviews() {
         guard let collectionView else { return }
         addSubviews([
+            lineView,
             collectionView
         ])
     }
 
     func setupLayout() {
         guard let collectionView else { return }
+        lineView.backgroundColor = .secondarySystemBackground.withAlphaComponent(0.4)
+        lineView.layer.cornerRadius = 16
+
+        let initialWidth = initialWeatherType.rawValue.defineWidth()
+        widthConstraint = lineView.widthAnchor.constraint(equalToConstant: initialWidth + 20)
+        widthConstraint.isActive = true
+        leadingConstraint = lineView.leadingAnchor.constraint(equalTo: leadingAnchor)
+        leadingConstraint.isActive = true
+
         NSLayoutConstraint.activate([
+            lineView.topAnchor.constraint(equalTo: topAnchor),
+            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -91,7 +126,7 @@ private extension WeatherSelectorView {
 
 // MARK: - UICollectionViewDataSource
 
-extension WeatherSelectorView: UICollectionViewDataSource {
+extension WeatherMenuView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         WeatherType.allCases.count
     }
@@ -100,7 +135,7 @@ extension WeatherSelectorView: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WeatherSelectorCell.self, for: indexPath)
+        let cell = collectionView.dequeue(WeatherMenuCell.self, for: indexPath)
         cell.setCellCategory(WeatherType.allCases[indexPath.item].rawValue)
         return cell
     }
@@ -108,16 +143,26 @@ extension WeatherSelectorView: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 
-extension WeatherSelectorView: UICollectionViewDelegate {
+extension WeatherMenuView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        if withAnimation {
+            UIView.animate(withDuration: 0.5) {
+                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            }
+        } else {
+            self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        }
+        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
+        let cellRect = attributes.frame
+        let cellFrameInSuperView = collectionView.convert(cellRect, to: collectionView.superview)
+        move(originX: cellFrameInSuperView.origin.x, width: cellFrameInSuperView.width)
         onSectionChange?(indexPath.row)
     }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension WeatherSelectorView: UICollectionViewDelegateFlowLayout {
+extension WeatherMenuView: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -141,7 +186,7 @@ extension WeatherSelectorView: UICollectionViewDelegateFlowLayout {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        WeatherSelectorCell.performWithoutAnimation {
+        WeatherMenuCell.performWithoutAnimation {
             cell.layoutIfNeeded()
         }
     }
@@ -151,7 +196,7 @@ extension WeatherSelectorView: UICollectionViewDelegateFlowLayout {
 
 private enum Spec {
     enum CollectionView {
-        static let insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        static let insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
 
     enum Cell {

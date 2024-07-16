@@ -11,8 +11,8 @@ final class MainViewController: BaseViewController {
 
     // MARK: - Subviews
 
-    private var menuView = WeatherSelectorView()
-    private let weatherView = WeatherSliderView()
+    private var menuView = WeatherMenuView()
+    private let weatherSliderView = WeatherSliderView()
 
     // MARK: - Lifecycle
 
@@ -28,9 +28,7 @@ final class MainViewController: BaseViewController {
 // MARK: - Setup appearance
 
 private extension MainViewController {
-    func setupAppearance() {
-        view.backgroundColor = .systemBackground
-    }
+    func setupAppearance() { }
 }
 
 // MARK: - Setup bindings
@@ -39,10 +37,10 @@ private extension MainViewController {
 
     func setupBindings() {
         menuView.onSectionChange = { [weak self] row in
-            self?.weatherView.scrollToItem(at: row)
+            self?.weatherSliderView.scrollToItem(at: row)
         }
 
-        weatherView.onEndDragging = { [weak self] item in
+        weatherSliderView.onEndDragging = { [weak self] item in
             self?.menuView.selectItem(at: item)
         }
     }
@@ -53,22 +51,22 @@ private extension MainViewController {
 private extension MainViewController {
     func setupSubviews() {
         view.addSubviews([
-            menuView,
-            weatherView
+            weatherSliderView,
+            menuView
         ])
     }
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
+            weatherSliderView.topAnchor.constraint(equalTo: view.topAnchor),
+            weatherSliderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            weatherSliderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            weatherSliderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
             menuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             menuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             menuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            menuView.heightAnchor.constraint(equalToConstant: 60),
-
-            weatherView.topAnchor.constraint(equalTo: menuView.bottomAnchor),
-            weatherView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            weatherView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            weatherView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            menuView.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
 }
@@ -79,7 +77,7 @@ extension MainViewController: MainViewInput {
     func setInitialWeather(_ row: Int) {
         Task {
             menuView.selectItem(at: row, animated: false)
-            weatherView.scrollToItem(at: row, animate: false)
+            weatherSliderView.scrollToItem(at: row, animate: false)
         }
     }
 }
