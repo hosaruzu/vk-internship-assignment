@@ -8,7 +8,7 @@
 import UIKit
 
 final class MainAssembly {
-    func build() -> UIViewController {
+   @MainActor func build() -> UIViewController {
         let viewController = MainViewController()
         let presenter = MainPresenter()
         viewController.addPresenterRef(presenter)

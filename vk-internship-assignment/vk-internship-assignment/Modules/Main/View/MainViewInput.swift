@@ -7,4 +7,8 @@
 
 import Foundation
 
-protocol MainViewInput: AnyObject { }
+@MainActor
+protocol MainViewInput: AnyObject {
+    var onViewDidLoad: (() -> Void)? { get set }
+    func setInitialWeather(_ row: Int)
+}

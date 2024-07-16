@@ -11,5 +11,18 @@ final class MainPresenter {
 
     // MARK: - View reference
 
-    weak var view: MainViewInput?
+    @MainActor
+    weak var view: MainViewInput? {
+        didSet {
+            setupInitialWeather()
+        }
+    }
+
+    @MainActor
+    func setupInitialWeather() {
+        let randomNumber = Int.random(in: 0..<WeatherType.allCases.count)
+        view?.onViewDidLoad = { [weak self] in
+            self?.view?.setInitialWeather(randomNumber)
+        }
+    }
 }
