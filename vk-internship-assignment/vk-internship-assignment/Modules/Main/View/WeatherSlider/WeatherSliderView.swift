@@ -9,6 +9,18 @@ import UIKit
 
 final class WeatherSliderView: UIView {
 
+    // MARK: - Data source
+
+    private var weather: [WeatherKind] = []
+    private var initialItem = 0 {
+        didSet {
+            gradientLayer.colors = [
+                UIColor(hexString: weather[initialItem].gradient.start).cgColor,
+                UIColor(hexString: weather[initialItem].gradient.end).cgColor
+            ]
+        }
+    }
+
     // MARK: - Callbacks
 
     var onEndDragging: ((Int) -> Void)?
@@ -17,6 +29,8 @@ final class WeatherSliderView: UIView {
 
     private let collectionView = SliderCollectionView(withPaging: true)
 
+    private let gradientLayer = CAGradientLayer()
+
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -24,17 +38,26 @@ final class WeatherSliderView: UIView {
         setupCollectionViewDelegatesAndRegistrations()
         setupSubviews()
         setupLayout()
-
-        collectionView.backgroundColor = .systemBlue
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func display(models: [WeatherKind], initialItem: Int) {
+        self.weather = models
+        self.initialItem = initialItem
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
+    }
+
     // MARK: - Public
 
     func scrollToItem(at row: Int) {
+        initialItem = row
         collectionView.selectItem(at: [0, row], animated: true, scrollPosition: .centeredHorizontally)
     }
 }
@@ -42,18 +65,6 @@ final class WeatherSliderView: UIView {
 // MARK: - Initialize collection view
 
 private extension WeatherSliderView {
-
-    func makeFlowLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        return layout
-    }
-
-    func initializeCollectionView() -> UICollectionView {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeFlowLayout())
-        return collectionView
-    }
 
     func setupCollectionViewDelegatesAndRegistrations() {
         collectionView.dataSource = self
@@ -68,6 +79,8 @@ private extension WeatherSliderView {
 
     func setupSubviews() {
         addSubviews([collectionView])
+        layer.addSublayer(gradientLayer)
+        layer.addSublayer(collectionView.layer)
     }
 
     func setupLayout() {
@@ -85,7 +98,7 @@ private extension WeatherSliderView {
 extension WeatherSliderView: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        WeatherType.allCases.count
+        weather.count
     }
 
     func collectionView(
@@ -93,7 +106,8 @@ extension WeatherSliderView: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeue(WeatherSliderCell.self, for: indexPath)
-        cell.setupWith(WeatherType.allCases[indexPath.row].rawValue)
+        let weatherItem = weather[indexPath.item]
+        cell.setupWith(weatherItem)
         return cell
     }
 
@@ -127,6 +141,7 @@ extension WeatherSliderView: UICollectionViewDelegate {
         targetContentOffset: UnsafeMutablePointer<CGPoint>
     ) {
         let offset = IndexPath(item: Int(targetContentOffset.pointee.x / frame.width), section: 0)
+        initialItem = offset.item
         onEndDragging?(offset.item)
     }
 }

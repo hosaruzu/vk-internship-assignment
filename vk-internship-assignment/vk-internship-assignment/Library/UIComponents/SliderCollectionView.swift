@@ -34,6 +34,7 @@ final class SliderCollectionView: UICollectionView {
 private extension SliderCollectionView {
     func setupAppearance() {
         bounces = false
+        backgroundColor = .clear
         showsHorizontalScrollIndicator = false
     }
 }

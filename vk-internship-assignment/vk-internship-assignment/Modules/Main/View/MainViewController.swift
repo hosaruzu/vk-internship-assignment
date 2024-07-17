@@ -82,4 +82,9 @@ extension MainViewController: MainViewInput {
             weatherSliderView.scrollToItem(at: row)
         }
     }
+
+    func display(models: [WeatherKind], initialItem: Int) {
+        weatherSliderView.display(models: models, initialItem: initialItem)
+        menuView.display(models: models)
+    }
 }

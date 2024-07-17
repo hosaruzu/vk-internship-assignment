@@ -9,13 +9,17 @@ import UIKit
 
 final class WeatherMenuView: UIView {
 
+    // MARK: - Data source
+
+    private var weather: [WeatherKind] = []
+
     // MARK: - Callbacks
 
     var onSectionChange: ((Int) -> Void)?
 
     // MARK: - Data source
 
-    private var weatherType: WeatherType = .clear
+    private var weatherType: Weather = .clear
 
     // MARK: - Subviews
 
@@ -57,8 +61,12 @@ final class WeatherMenuView: UIView {
 
     // MARK: - Public
 
+    func display(models: [WeatherKind]) {
+        weather = models
+    }
+
     func selectItem(at row: Int) {
-        weatherType = WeatherType.allCases[row]
+        weatherType = Weather.allCases[row]
         collectionView(collectionView, didSelectItemAt: [0, row])
     }
 }
@@ -101,7 +109,7 @@ private extension WeatherMenuView {
 
 extension WeatherMenuView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        WeatherType.allCases.count
+        weather.count
     }
 
     func collectionView(
@@ -109,7 +117,8 @@ extension WeatherMenuView: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeue(WeatherMenuCell.self, for: indexPath)
-        cell.setCellCategory(WeatherType.allCases[indexPath.item].rawValue)
+        let weather = weather[indexPath.item]
+        cell.setCellCategory(weather)
         return cell
     }
 }
@@ -138,7 +147,7 @@ extension WeatherMenuView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width = WeatherType.allCases[indexPath.item].rawValue.defineWidth()
+        let width = Weather.allCases[indexPath.item].rawValue.defineWidth()
         return CGSize(width: width + UIConstants.Cell.horizontalPadding, height: collectionView.frame.height)
     }
 

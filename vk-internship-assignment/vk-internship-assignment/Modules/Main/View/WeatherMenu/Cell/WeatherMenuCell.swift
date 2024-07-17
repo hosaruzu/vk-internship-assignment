@@ -19,6 +19,13 @@ final class WeatherMenuCell: UICollectionViewCell {
         return label
     }()
 
+    private let weatherImageView: UIImageView = {
+        let image = UIImageView()
+        image.tintColor = UIConstants.Image.tintColor
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -34,8 +41,9 @@ final class WeatherMenuCell: UICollectionViewCell {
 
     // MARK: - Public
 
-    func setCellCategory(_ name: String) {
-        weatherTypeNameLabel.text = name
+    func setCellCategory(_ weather: WeatherKind) {
+        weatherTypeNameLabel.text = weather.type.name
+        weatherImageView.image = UIImage(systemName: weather.imageName)
     }
 }
 
@@ -50,13 +58,20 @@ private extension WeatherMenuCell {
 
 private extension WeatherMenuCell {
     func setupSubviews() {
-        contentView.addSubviews([weatherTypeNameLabel])
+        contentView.addSubviews([weatherImageView, weatherTypeNameLabel])
     }
 
     func setupLayout() {
         NSLayoutConstraint.activate([
+            weatherImageView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: UIConstants.Image.leadingOffset),
+            weatherImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            weatherImageView.widthAnchor.constraint(equalToConstant: UIConstants.Image.width),
+            weatherImageView.heightAnchor.constraint(equalToConstant: UIConstants.Image.height),
+
             weatherTypeNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            weatherTypeNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            weatherTypeNameLabel.leadingAnchor.constraint(equalTo: weatherImageView.trailingAnchor),
             weatherTypeNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             weatherTypeNameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor)
         ])
@@ -74,5 +89,12 @@ private enum UIConstants {
     enum Cell {
         static let cornerRadius: CGFloat = 16
         static let backgroundColor: UIColor = .systemBackground.withAlphaComponent(0.1)
+    }
+
+    enum Image {
+        static let leadingOffset: CGFloat = 8
+        static let width: CGFloat = 20
+        static let height: CGFloat = 20
+        static let tintColor = UIConstants.Label.color.withAlphaComponent(0.5)
     }
 }

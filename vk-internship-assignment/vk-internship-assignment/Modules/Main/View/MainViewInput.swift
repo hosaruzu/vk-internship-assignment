@@ -11,4 +11,5 @@ import Foundation
 protocol MainViewInput: AnyObject {
     var onViewDidLoad: (() -> Void)? { get set }
     func setInitialWeather(_ row: Int)
+    func display(models: [WeatherKind], initialItem: Int)
 }

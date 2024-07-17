@@ -21,10 +21,11 @@
 		0C7E4CDA2C46AD000057BD66 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CD92C46AD000057BD66 /* UIView+Ext.swift */; };
 		0C7E4CDC2C46AD4B0057BD66 /* ReuseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CDB2C46AD4B0057BD66 /* ReuseIdentifiable.swift */; };
 		0C7E4CDE2C46AE2C0057BD66 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CDD2C46AE2C0057BD66 /* String+Ext.swift */; };
-		0C7E4CE12C46B01C0057BD66 /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CE02C46B01C0057BD66 /* WeatherType.swift */; };
+		0C7E4CE12C46B01C0057BD66 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CE02C46B01C0057BD66 /* Weather.swift */; };
 		0CD87AC72C47B22900BE8CBC /* WeatherSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC32C47B22900BE8CBC /* WeatherSliderCell.swift */; };
 		0CD87AC82C47B22900BE8CBC /* WeatherSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC52C47B22900BE8CBC /* WeatherSliderView.swift */; };
 		0CD87ACA2C47F84100BE8CBC /* SliderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */; };
+		0CD87ACE2C480B2200BE8CBC /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87ACD2C480B2200BE8CBC /* UIColor+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,10 +45,11 @@
 		0C7E4CD92C46AD000057BD66 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		0C7E4CDB2C46AD4B0057BD66 /* ReuseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiable.swift; sourceTree = "<group>"; };
 		0C7E4CDD2C46AE2C0057BD66 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
-		0C7E4CE02C46B01C0057BD66 /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
+		0C7E4CE02C46B01C0057BD66 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		0CD87AC32C47B22900BE8CBC /* WeatherSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSliderCell.swift; sourceTree = "<group>"; };
 		0CD87AC52C47B22900BE8CBC /* WeatherSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSliderView.swift; sourceTree = "<group>"; };
 		0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCollectionView.swift; sourceTree = "<group>"; };
+		0CD87ACD2C480B2200BE8CBC /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				0C7E4CD92C46AD000057BD66 /* UIView+Ext.swift */,
 				0C7E4CDB2C46AD4B0057BD66 /* ReuseIdentifiable.swift */,
 				0C7E4CDD2C46AE2C0057BD66 /* String+Ext.swift */,
+				0CD87ACD2C480B2200BE8CBC /* UIColor+Ext.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -201,7 +204,7 @@
 		0C7E4CDF2C46AFFD0057BD66 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0C7E4CE02C46B01C0057BD66 /* WeatherType.swift */,
+				0C7E4CE02C46B01C0057BD66 /* Weather.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -321,13 +324,14 @@
 				0C7E4CC92C46A7DE0057BD66 /* MainAssembly.swift in Sources */,
 				0CD87AC72C47B22900BE8CBC /* WeatherSliderCell.swift in Sources */,
 				0C7E4CDA2C46AD000057BD66 /* UIView+Ext.swift in Sources */,
+				0CD87ACE2C480B2200BE8CBC /* UIColor+Ext.swift in Sources */,
 				0C7E4CCB2C46A8160057BD66 /* MainPresenter.swift in Sources */,
 				0C7E4CD52C46AC390057BD66 /* WeatherMenuCell.swift in Sources */,
 				0C7E4CDE2C46AE2C0057BD66 /* String+Ext.swift in Sources */,
 				0C7E4CD62C46AC390057BD66 /* WeatherMenuView.swift in Sources */,
 				0C7E4CBE2C46A5CF0057BD66 /* BaseViewController.swift in Sources */,
 				0C7E4CC62C46A6DE0057BD66 /* MainViewController.swift in Sources */,
-				0C7E4CE12C46B01C0057BD66 /* WeatherType.swift in Sources */,
+				0C7E4CE12C46B01C0057BD66 /* Weather.swift in Sources */,
 				0C7E4CA22C46894E0057BD66 /* AppDelegate.swift in Sources */,
 				0C7E4CA42C46894E0057BD66 /* SceneDelegate.swift in Sources */,
 				0CD87AC82C47B22900BE8CBC /* WeatherSliderView.swift in Sources */,

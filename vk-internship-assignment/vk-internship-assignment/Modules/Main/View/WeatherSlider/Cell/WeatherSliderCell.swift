@@ -26,9 +26,18 @@ final class WeatherSliderCell: UICollectionViewCell {
         return view
     }()
 
-    private let label: UILabel = {
+    private let weatherLabel: UILabel = {
         let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .title1)
+        label.textColor = .secondaryLabel
         return label
+    }()
+
+    private let weatherImageView: UIImageView = {
+        let image = UIImageView()
+        image.tintColor = .secondaryLabel
+        image.contentMode = .scaleAspectFit
+        return image
     }()
 
     // MARK: - Init
@@ -43,10 +52,9 @@ final class WeatherSliderCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Public
-
-    func setupWith(_ string: String) {
-        label.text = string
+    func setupWith(_ model: WeatherKind) {
+        weatherLabel.text = model.type.name
+        weatherImageView.image = UIImage(systemName: model.imageName)
     }
 
     func showWithAnimation() {
@@ -70,7 +78,7 @@ final class WeatherSliderCell: UICollectionViewCell {
 private extension WeatherSliderCell {
     func setupSubviews() {
         contentView.addSubviews([blurBackgroundView])
-        blurBackgroundView.addSubviews([blurEffectView, label])
+        blurBackgroundView.addSubviews([blurEffectView, weatherImageView, weatherLabel])
     }
 
     func setupLayout() {
@@ -89,8 +97,13 @@ private extension WeatherSliderCell {
             blurEffectView.trailingAnchor.constraint(equalTo: blurBackgroundView.trailingAnchor),
             blurEffectView.bottomAnchor.constraint(equalTo: blurBackgroundView.bottomAnchor),
 
-            label.centerXAnchor.constraint(equalTo: blurBackgroundView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: blurBackgroundView.centerYAnchor)
+            weatherImageView.centerYAnchor.constraint(equalTo: blurBackgroundView.centerYAnchor, constant: -40),
+            weatherImageView.centerXAnchor.constraint(equalTo: blurBackgroundView.centerXAnchor),
+            weatherImageView.widthAnchor.constraint(equalToConstant: 100),
+            weatherImageView.heightAnchor.constraint(equalToConstant: 100),
+
+            weatherLabel.centerXAnchor.constraint(equalTo: blurBackgroundView.centerXAnchor),
+            weatherLabel.centerYAnchor.constraint(equalTo: blurBackgroundView.centerYAnchor, constant: 40)
         ])
     }
 }
@@ -99,8 +112,8 @@ private extension WeatherSliderCell {
 
 private enum UIConstants {
     enum Animation {
-        static let duration: TimeInterval = 0.4
-        static let delay: TimeInterval = 0.35
+        static let duration: TimeInterval = 0.3
+        static let delay: TimeInterval = 0.3
     }
 
     enum BackgroundView {
@@ -108,6 +121,6 @@ private enum UIConstants {
         static let cornerRadius: CGFloat = 16
         static let widthMultipier: CGFloat = 0.7
         static let heightMultipier: CGFloat = 0.5
-        static let alpha: CGFloat = 0.8
+        static let alpha: CGFloat = 0.9
     }
 }
