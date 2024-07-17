@@ -14,10 +14,8 @@ final class WeatherSliderView: UIView {
     private var weather: [WeatherKind] = []
     private var initialItem = 0 {
         didSet {
-            gradientLayer.colors = [
-                UIColor(hexString: weather[initialItem].gradient.start).cgColor,
-                UIColor(hexString: weather[initialItem].gradient.end).cgColor
-            ]
+            setupGradient()
+            animateGradient()
         }
     }
 
@@ -156,5 +154,27 @@ extension WeatherSliderView: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         .init(width: bounds.width, height: frame.height)
+    }
+}
+
+// MARK: - Setup gradients
+
+private extension WeatherSliderView {
+    func setupGradient() {
+        gradientLayer.colors = [
+            UIColor(hexString: weather[initialItem].gradient.end).cgColor,
+            UIColor(hexString: weather[initialItem].gradient.start).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 1)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.3)
+        gradientLayer.locations = [0, 1]
+    }
+
+    func animateGradient() {
+        let colorAnimation = CABasicAnimation(keyPath: "locations")
+        colorAnimation.fromValue = [0, 0.4]
+        colorAnimation.toValue = [0, 0.9]
+        colorAnimation.duration = 1.5
+        gradientLayer.add(colorAnimation, forKey: nil)
     }
 }
