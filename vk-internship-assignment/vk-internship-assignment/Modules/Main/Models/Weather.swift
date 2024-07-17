@@ -57,7 +57,7 @@ extension WeatherKind {
         WeatherKind(
             type: .thunderstorm,
             imageName: "cloud.bolt.fill",
-            isParticipating: false,
+            isParticipating: true,
             gradient: ("9FA1A3", "586F78")
         ),
         WeatherKind(

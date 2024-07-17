@@ -11,7 +11,7 @@ final class MainViewController: BaseViewController {
 
     // MARK: - Subviews
 
-    private var menuView = WeatherMenuView()
+    private var weatherCategoriesView = WeatherMenuView()
     private let weatherSliderView = WeatherSliderView()
 
     // MARK: - Lifecycle
@@ -38,12 +38,12 @@ private extension MainViewController {
 private extension MainViewController {
 
     func setupBindings() {
-        menuView.onSectionChange = { [weak self] row in
+        weatherCategoriesView.onSectionChange = { [weak self] row in
             self?.weatherSliderView.scrollToItem(at: row)
         }
 
         weatherSliderView.onEndDragging = { [weak self] item in
-            self?.menuView.selectItem(at: item)
+            self?.weatherCategoriesView.selectItem(at: item)
         }
     }
 }
@@ -54,7 +54,7 @@ private extension MainViewController {
     func setupSubviews() {
         view.addSubviews([
             weatherSliderView,
-            menuView
+            weatherCategoriesView
         ])
     }
 
@@ -65,10 +65,10 @@ private extension MainViewController {
             weatherSliderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             weatherSliderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            menuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            menuView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            menuView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            menuView.heightAnchor.constraint(equalToConstant: 60)
+            weatherCategoriesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            weatherCategoriesView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            weatherCategoriesView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            weatherCategoriesView.heightAnchor.constraint(equalToConstant: UIConstant.Categories.height)
         ])
     }
 }
@@ -78,13 +78,21 @@ private extension MainViewController {
 extension MainViewController: MainViewInput {
     func setInitialWeather(_ row: Int) {
         Task {
-            menuView.selectItem(at: row)
+            weatherCategoriesView.selectItem(at: row)
             weatherSliderView.scrollToItem(at: row)
         }
     }
 
     func display(models: [WeatherKind], initialItem: Int) {
         weatherSliderView.display(models: models, initialItem: initialItem)
-        menuView.display(models: models)
+        weatherCategoriesView.display(models: models)
+    }
+}
+
+// MARK: - UI constants
+
+private enum UIConstant {
+    enum Categories {
+        static let height: CGFloat = 60
     }
 }

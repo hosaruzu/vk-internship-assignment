@@ -74,7 +74,6 @@ private extension WeatherSliderView {
 // MARK: - Setup subviews
 
 private extension WeatherSliderView {
-
     func setupSubviews() {
         addSubviews([collectionView])
         layer.addSublayer(gradientLayer)
