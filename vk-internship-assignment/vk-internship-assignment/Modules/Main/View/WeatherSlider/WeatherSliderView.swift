@@ -16,7 +16,6 @@ final class WeatherSliderView: UIView {
     // MARK: - Subviews
 
     private(set) var collectionView: UICollectionView?
-    private var currentRow: Int = 0
 
     // MARK: - Init
 
@@ -36,7 +35,6 @@ final class WeatherSliderView: UIView {
     // MARK: - Public
 
     func scrollToItem(at row: Int, animate: Bool = true) {
-        currentRow = row
         self.collectionView?.selectItem(at: [0, row], animated: animate, scrollPosition: .centeredHorizontally)
     }
 }
@@ -110,18 +108,22 @@ extension WeatherSliderView: UICollectionViewDataSource {
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-        cell.layer.opacity = 0
-        UIView.animate(withDuration: 0.3, delay: 0.35) {
-            cell.transform = CGAffineTransform(scaleX: 1, y: 1)
-            cell.layer.opacity = 1
-            cell.layer.cornerRadius = 0.0
-        }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        guard let cell = cell as? WeatherSliderCell else { return }
+        cell.showWithAnimation()
     }
 
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.layer.opacity = 0
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplaying cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        guard let cell = cell as? WeatherSliderCell else { return }
+        cell.hide()
     }
 }
 
