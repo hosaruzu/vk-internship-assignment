@@ -15,17 +15,17 @@ final class WeatherSliderView: UIView {
 
     // MARK: - Subviews
 
-    private(set) var collectionView: UICollectionView?
+    private let collectionView = SliderCollectionView(withPaging: true)
 
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        collectionView = initializeCollectionView()
-        setupCollectionViewAppearance()
         setupCollectionViewDelegatesAndRegistrations()
         setupSubviews()
         setupLayout()
+
+        collectionView.backgroundColor = .systemBlue
     }
 
     required init?(coder: NSCoder) {
@@ -34,8 +34,8 @@ final class WeatherSliderView: UIView {
 
     // MARK: - Public
 
-    func scrollToItem(at row: Int, animate: Bool = true) {
-        self.collectionView?.selectItem(at: [0, row], animated: animate, scrollPosition: .centeredHorizontally)
+    func scrollToItem(at row: Int) {
+        collectionView.selectItem(at: [0, row], animated: true, scrollPosition: .centeredHorizontally)
     }
 }
 
@@ -55,16 +55,7 @@ private extension WeatherSliderView {
         return collectionView
     }
 
-    func setupCollectionViewAppearance() {
-        guard let collectionView else { return }
-        collectionView.backgroundColor = .systemBlue
-        collectionView.isPagingEnabled = true
-        collectionView.bounces = false
-        collectionView.showsHorizontalScrollIndicator = false
-    }
-
     func setupCollectionViewDelegatesAndRegistrations() {
-        guard let collectionView else { return }
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(WeatherSliderCell.self)
@@ -76,12 +67,10 @@ private extension WeatherSliderView {
 private extension WeatherSliderView {
 
     func setupSubviews() {
-        guard let collectionView else { return }
         addSubviews([collectionView])
     }
 
     func setupLayout() {
-        guard let collectionView else { return }
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),

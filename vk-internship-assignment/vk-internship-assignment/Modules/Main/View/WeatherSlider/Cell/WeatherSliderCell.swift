@@ -16,7 +16,7 @@ final class WeatherSliderCell: UICollectionViewCell {
         view.layer.cornerRadius = UIConstants.BackgroundView.cornerRadius
         view.clipsToBounds = true
         view.transform = UIConstants.BackgroundView.initialTransform
-        view.layer.opacity = 0
+        view.alpha = 0
         return view
     }()
 
@@ -55,13 +55,13 @@ final class WeatherSliderCell: UICollectionViewCell {
             delay: UIConstants.Animation.delay
         ) {
             self.blurBackgroundView.transform = .identity
-            self.blurBackgroundView.layer.opacity = 1
+            self.blurBackgroundView.alpha = UIConstants.BackgroundView.alpha
         }
     }
 
     func hide() {
         blurBackgroundView.transform = UIConstants.BackgroundView.initialTransform
-        blurBackgroundView.layer.opacity = 0
+        blurBackgroundView.alpha = 0
     }
 }
 
@@ -104,9 +104,10 @@ private enum UIConstants {
     }
 
     enum BackgroundView {
-        static let initialTransform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        static let initialTransform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         static let cornerRadius: CGFloat = 16
         static let widthMultipier: CGFloat = 0.7
         static let heightMultipier: CGFloat = 0.5
+        static let alpha: CGFloat = 0.8
     }
 }

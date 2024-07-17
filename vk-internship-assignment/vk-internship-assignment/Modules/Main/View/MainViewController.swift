@@ -28,7 +28,9 @@ final class MainViewController: BaseViewController {
 // MARK: - Setup appearance
 
 private extension MainViewController {
-    func setupAppearance() { }
+    func setupAppearance() {
+        view.backgroundColor = .systemBackground
+    }
 }
 
 // MARK: - Setup bindings
@@ -76,8 +78,8 @@ private extension MainViewController {
 extension MainViewController: MainViewInput {
     func setInitialWeather(_ row: Int) {
         Task {
-            menuView.selectItem(at: row, animated: false)
-            weatherSliderView.scrollToItem(at: row, animate: false)
+            menuView.selectItem(at: row)
+            weatherSliderView.scrollToItem(at: row)
         }
     }
 }

@@ -24,6 +24,7 @@
 		0C7E4CE12C46B01C0057BD66 /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CE02C46B01C0057BD66 /* WeatherType.swift */; };
 		0CD87AC72C47B22900BE8CBC /* WeatherSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC32C47B22900BE8CBC /* WeatherSliderCell.swift */; };
 		0CD87AC82C47B22900BE8CBC /* WeatherSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC52C47B22900BE8CBC /* WeatherSliderView.swift */; };
+		0CD87ACA2C47F84100BE8CBC /* SliderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		0C7E4CE02C46B01C0057BD66 /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
 		0CD87AC32C47B22900BE8CBC /* WeatherSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSliderCell.swift; sourceTree = "<group>"; };
 		0CD87AC52C47B22900BE8CBC /* WeatherSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSliderView.swift; sourceTree = "<group>"; };
+		0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 		0C7E4CB92C46A4E70057BD66 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 			files = (
 				0C7E4CC42C46A6C50057BD66 /* MainViewInput.swift in Sources */,
 				0C7E4CDC2C46AD4B0057BD66 /* ReuseIdentifiable.swift in Sources */,
+				0CD87ACA2C47F84100BE8CBC /* SliderCollectionView.swift in Sources */,
 				0C7E4CC92C46A7DE0057BD66 /* MainAssembly.swift in Sources */,
 				0CD87AC72C47B22900BE8CBC /* WeatherSliderCell.swift in Sources */,
 				0C7E4CDA2C46AD000057BD66 /* UIView+Ext.swift in Sources */,

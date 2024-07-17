@@ -12,26 +12,43 @@ final class WeatherMenuView: UIView {
     // MARK: - Callbacks
 
     var onSectionChange: ((Int) -> Void)?
-    var withAnimation = false
+
+    // MARK: - Data source
+
+    private var weatherType: WeatherType = .clear
 
     // MARK: - Subviews
 
-    private var collectionView: UICollectionView?
-    private var initialWeatherType: WeatherType = .clear
+    private let collectionView = SliderCollectionView(withPaging: false)
 
-    private let lineView = UIView()
+    private let highlightView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemThinMaterial)
+        let view = UIVisualEffectView(effect: blurEffect)
+        view.layer.cornerRadius = UIConstants.HighlightView.cornerRadius
+        view.alpha = UIConstants.HighlightView.alpha
+        view.clipsToBounds = true
+        return view
+    }()
+
+    // MARK: - Dynamic constraints
+
     private var widthConstraint = NSLayoutConstraint()
     private var leadingConstraint = NSLayoutConstraint()
+    private var selectedIndexPath: IndexPath?
+
+    // MARK: - Flags
+
+    /// Prevents animations on first appearance
+    private var isFirstAppearance = false
 
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        collectionView = initializeCollectionView()
         setupCollectionViewDelegatesAndRegistrations()
-        setupCollectionViewAppearance()
         addSubviews()
         setupLayout()
+        initDynamicConstraints()
     }
 
     required init?(coder: NSCoder) {
@@ -40,53 +57,20 @@ final class WeatherMenuView: UIView {
 
     // MARK: - Public
 
-    func selectItem(at row: Int, animated: Bool = true) {
-        initialWeatherType = WeatherType.allCases[row]
-        collectionView(collectionView ?? UICollectionView(), didSelectItemAt: [0, row])
+    func selectItem(at row: Int) {
+        weatherType = WeatherType.allCases[row]
+        collectionView(collectionView, didSelectItemAt: [0, row])
     }
 }
 
 // MARK: - Setup collection view
 
 private extension WeatherMenuView {
-    func makeFlowLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        return layout
-    }
-
-    func initializeCollectionView() -> UICollectionView {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeFlowLayout())
-        return collectionView
-    }
-
-    func setupCollectionViewAppearance() {
-        guard let collectionView else { return }
-        collectionView.backgroundColor = .clear
-        collectionView.bounces = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isScrollEnabled = false
-        collectionView.selectItem(at: [0, 0], animated: false, scrollPosition: [])
-    }
-
     func setupCollectionViewDelegatesAndRegistrations() {
-        guard let collectionView else { return }
+        collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(WeatherMenuCell.self)
-    }
-
-    func move(originX: CGFloat, width: CGFloat) {
-        self.widthConstraint.constant = width
-        self.leadingConstraint.constant = originX
-        if withAnimation {
-            UIView.animate(withDuration: 0.4) {
-                self.layoutIfNeeded()
-            }
-        } else {
-            self.layoutIfNeeded()
-        }
-        withAnimation = true
     }
 }
 
@@ -94,27 +78,16 @@ private extension WeatherMenuView {
 
 private extension WeatherMenuView {
     func addSubviews() {
-        guard let collectionView else { return }
         addSubviews([
-            lineView,
+            highlightView,
             collectionView
         ])
     }
 
     func setupLayout() {
-        guard let collectionView else { return }
-        lineView.backgroundColor = .secondarySystemBackground.withAlphaComponent(0.4)
-        lineView.layer.cornerRadius = 16
-
-        let initialWidth = initialWeatherType.rawValue.defineWidth()
-        widthConstraint = lineView.widthAnchor.constraint(equalToConstant: initialWidth + 20)
-        widthConstraint.isActive = true
-        leadingConstraint = lineView.leadingAnchor.constraint(equalTo: leadingAnchor)
-        leadingConstraint.isActive = true
-
         NSLayoutConstraint.activate([
-            lineView.topAnchor.constraint(equalTo: topAnchor),
-            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            highlightView.topAnchor.constraint(equalTo: topAnchor),
+            highlightView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -145,18 +118,15 @@ extension WeatherMenuView: UICollectionViewDataSource {
 
 extension WeatherMenuView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if withAnimation {
-            UIView.animate(withDuration: 0.5) {
-                self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-            }
-        } else {
-            self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-        }
-        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
-        let cellRect = attributes.frame
-        let cellFrameInSuperView = collectionView.convert(cellRect, to: collectionView.superview)
-        move(originX: cellFrameInSuperView.origin.x, width: cellFrameInSuperView.width)
-        onSectionChange?(indexPath.row)
+        selectedIndexPath = indexPath
+        animateCollectionView(indexPath)
+        moveHighlightView(indexPath)
+        onSectionChange?(indexPath.item)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let selectedIndexPath else { return }
+        moveHighlightView(selectedIndexPath, animate: false)
     }
 }
 
@@ -169,7 +139,7 @@ extension WeatherMenuView: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let width = WeatherType.allCases[indexPath.item].rawValue.defineWidth()
-        return CGSize(width: width + Spec.Cell.padding, height: collectionView.frame.height)
+        return CGSize(width: width + UIConstants.Cell.horizontalPadding, height: collectionView.frame.height)
     }
 
     func collectionView(
@@ -177,7 +147,7 @@ extension WeatherMenuView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        Spec.CollectionView.insets
+        UIConstants.CollectionView.insets
     }
 
     /// For prevent menu cell sliding from bottom on displaying
@@ -192,14 +162,69 @@ extension WeatherMenuView: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - Animation helpers
+
+private extension WeatherMenuView {
+    func move(originX: CGFloat, width: CGFloat, animation: Bool = true) {
+        self.widthConstraint.constant = width
+        self.leadingConstraint.constant = originX
+        changeLayoutWithAnimation(animation)
+    }
+
+    func changeLayoutWithAnimation(_ animation: Bool) {
+        if isFirstAppearance && animation {
+            UIView.animate(withDuration: UIConstants.Animation.duration) {
+                self.layoutIfNeeded()
+            }
+        } else {
+            self.layoutIfNeeded()
+        }
+        isFirstAppearance = true
+    }
+
+    func initDynamicConstraints() {
+        let initialWidth = weatherType.rawValue.defineWidth()
+        widthConstraint = highlightView.widthAnchor.constraint(equalToConstant: initialWidth)
+        leadingConstraint = highlightView.leadingAnchor.constraint(equalTo: leadingAnchor)
+        widthConstraint.isActive = true
+        leadingConstraint.isActive = true
+    }
+
+    func animateCollectionView(_ indexPath: IndexPath) {
+        if isFirstAppearance {
+            UIView.animate(withDuration: UIConstants.Animation.duration) {
+                self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            }
+        } else {
+            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        }
+    }
+
+    func moveHighlightView(_ indexPath: IndexPath, animate: Bool = true) {
+        guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else { return }
+        let cellRect = attributes.frame
+        let cellFrameInSuperView = collectionView.convert(cellRect, to: collectionView.superview)
+        move(originX: cellFrameInSuperView.origin.x, width: cellFrameInSuperView.width, animation: animate)
+    }
+}
+
 // MARK: - UI constants
 
-private enum Spec {
+private enum UIConstants {
     enum CollectionView {
         static let insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
 
+    enum HighlightView {
+        static let cornerRadius: CGFloat = 16
+        static let alpha: CGFloat = 0.8
+    }
+
     enum Cell {
-        static let padding: CGFloat = 24
+        static let horizontalPadding: CGFloat = 50
+    }
+
+    enum Animation {
+        static let duration: TimeInterval = 0.4
     }
 }
