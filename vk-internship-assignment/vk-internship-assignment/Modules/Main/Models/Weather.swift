@@ -52,13 +52,13 @@ extension WeatherKind {
             type: .fog,
             imageName: "cloud.fog.fill",
             isParticipating: false,
-            gradient: ("9FA1A3", "586F78")
+            gradient: ("D4D4D4", "F4F4F4")
         ),
         WeatherKind(
             type: .thunderstorm,
             imageName: "cloud.bolt.fill",
             isParticipating: false,
-            gradient: ("D4D4D4", "F4F4F4")
+            gradient: ("9FA1A3", "586F78")
         ),
         WeatherKind(
             type: .snow,

@@ -46,11 +46,14 @@ final class WeatherSliderCell: UICollectionViewCell {
         super.init(frame: frame)
         setupSubviews()
         setupLayout()
+        addBackgroundViewTapGesture()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Public
 
     func setupWith(_ model: WeatherKind) {
         weatherLabel.text = model.type.name
@@ -62,14 +65,16 @@ final class WeatherSliderCell: UICollectionViewCell {
             withDuration: UIConstants.Animation.duration,
             delay: UIConstants.Animation.delay
         ) {
-            self.blurBackgroundView.transform = .identity
             self.blurBackgroundView.alpha = UIConstants.BackgroundView.alpha
+            self.blurBackgroundView.transform = .identity
         }
     }
 
     func hide() {
-        blurBackgroundView.transform = UIConstants.BackgroundView.initialTransform
-        blurBackgroundView.alpha = 0
+        UIView.animate(withDuration: UIConstants.Animation.duration) {
+                self.blurBackgroundView.alpha = 0
+                self.blurBackgroundView.transform = UIConstants.BackgroundView.initialTransform
+            }
     }
 }
 
@@ -97,14 +102,33 @@ private extension WeatherSliderCell {
             blurEffectView.trailingAnchor.constraint(equalTo: blurBackgroundView.trailingAnchor),
             blurEffectView.bottomAnchor.constraint(equalTo: blurBackgroundView.bottomAnchor),
 
-            weatherImageView.centerYAnchor.constraint(equalTo: blurBackgroundView.centerYAnchor, constant: -40),
+            weatherImageView.centerYAnchor.constraint(
+                equalTo: blurBackgroundView.centerYAnchor,
+                constant: -UIConstants.Common.centerOffset),
             weatherImageView.centerXAnchor.constraint(equalTo: blurBackgroundView.centerXAnchor),
-            weatherImageView.widthAnchor.constraint(equalToConstant: 100),
-            weatherImageView.heightAnchor.constraint(equalToConstant: 100),
+            weatherImageView.widthAnchor.constraint(equalToConstant: UIConstants.Image.width),
+            weatherImageView.heightAnchor.constraint(equalToConstant: UIConstants.Image.width),
 
             weatherLabel.centerXAnchor.constraint(equalTo: blurBackgroundView.centerXAnchor),
-            weatherLabel.centerYAnchor.constraint(equalTo: blurBackgroundView.centerYAnchor, constant: 40)
+            weatherLabel.centerYAnchor.constraint(
+                equalTo: blurBackgroundView.centerYAnchor,
+                constant: UIConstants.Common.centerOffset)
         ])
+    }
+
+    func addBackgroundViewTapGesture() {
+        blurBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
+    }
+
+    @objc
+    func onTap() {
+        UIView.animate(withDuration: UIConstants.Tap.durationIn) {
+            self.blurBackgroundView.transform = UIConstants.BackgroundView.initialTransform
+        } completion: { _ in
+            UIView.animate(withDuration: UIConstants.Tap.durationOut) {
+                self.blurBackgroundView.transform = .identity
+            }
+        }
     }
 }
 
@@ -112,15 +136,29 @@ private extension WeatherSliderCell {
 
 private enum UIConstants {
     enum Animation {
-        static let duration: TimeInterval = 0.3
+        static let duration: TimeInterval = 0.2
         static let delay: TimeInterval = 0.3
     }
 
     enum BackgroundView {
-        static let initialTransform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        static let initialTransform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         static let cornerRadius: CGFloat = 16
         static let widthMultipier: CGFloat = 0.7
         static let heightMultipier: CGFloat = 0.5
         static let alpha: CGFloat = 0.9
+    }
+
+    enum Image {
+        static let width: CGFloat = 100
+        static let height: CGFloat = 100
+    }
+
+    enum Common {
+        static let centerOffset: CGFloat = 40
+    }
+
+    enum Tap {
+        static let durationIn: TimeInterval = 0.1
+        static let durationOut: TimeInterval = 0.2
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 final class MainPresenter {
 
-    let randomNumber = Int.random(in: 0..<Weather.allCases.count)
+    let randomNumber = Int.random(in: 0..<WeatherKind.mock.count)
 
     // MARK: - View reference
 
@@ -21,8 +21,6 @@ final class MainPresenter {
     }
 
     func setupInitialWeather() {
-
-
         view?.onViewDidLoad = { [weak self] in
             guard let randomNumber = self?.randomNumber else { return }
             self?.view?.setInitialWeather(randomNumber)
