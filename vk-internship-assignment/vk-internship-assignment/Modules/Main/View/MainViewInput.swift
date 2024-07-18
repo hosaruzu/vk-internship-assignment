@@ -7,4 +7,8 @@
 
 import Foundation
 
-protocol MainViewInput: AnyObject { }
+protocol MainViewInput: AnyObject {
+    var onViewDidLoad: (() -> Void)? { get set }
+    var onLocaleButtonTap: (() -> Void)? { get set }
+    func display(models: [WeatherKind], initialItem: Int, locale: String)
+}
