@@ -18,7 +18,7 @@ enum Weather: String, CaseIterable {
 
 extension Weather {
     var name: String {
-        rawValue.capitalized
+        rawValue.capitalized.localized()
     }
 }
 

@@ -7,29 +7,61 @@
 
 import Foundation
 
-@MainActor
 final class MainPresenter {
 
-    let randomNumber = Int.random(in: 0..<WeatherKind.mock.count)
+    // MARK: - Dependencies
+
+    private let weatherService: WeatherService
+    private let router: Router
+
+    // MARK: - Init
+
+    init(
+        weatherService: some WeatherService,
+        router: some Router
+    ) {
+        self.weatherService = weatherService
+        self.router = router
+
+    }
 
     // MARK: - View reference
 
     weak var view: MainViewInput? {
         didSet {
-            setupInitialWeather()
+            onLoad()
         }
     }
 
-    func setupInitialWeather() {
+    // MARK: - Display on load
+
+    private func onLoad() {
         view?.onViewDidLoad = { [weak self] in
-            guard let randomNumber = self?.randomNumber else { return }
-            self?.view?.setInitialWeather(randomNumber)
             self?.handleDisplaying()
         }
+
+        view?.onLocaleButtonTap = { [weak self] in
+            self?.openLanguagePreferences()
+        }
     }
 
-    func handleDisplaying() {
-        let weather = WeatherKind.mock
-        view?.display(models: weather, initialItem: self.randomNumber)
+    private func handleDisplaying() {
+        let currentLang = getCurrentLanguage()
+        let item = weatherService.obtainInitialWeatherItem()
+        let weatherModels = weatherService.obtainWeather()
+        view?.display(models: weatherModels, initialItem: item, locale: currentLang)
+    }
+
+    // MARK: - Get current app locale
+
+    private func getCurrentLanguage() -> String {
+        guard let languageCode = NSLocale.current.languageCode else { return "" }
+        return languageCode
+    }
+
+    // MARK: - Router
+
+    private func openLanguagePreferences() {
+        router.presentLanguagePreferences()
     }
 }
