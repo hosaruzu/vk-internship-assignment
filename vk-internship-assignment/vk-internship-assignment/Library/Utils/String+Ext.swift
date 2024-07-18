@@ -13,4 +13,8 @@ extension String {
         let attributes = [NSAttributedString.Key.font: font]
         return self.size(withAttributes: attributes).width
     }
+
+    func localized() -> String {
+        NSLocalizedString(self, tableName: "Localizable", bundle: .main, value: self, comment: self)
+    }
 }
