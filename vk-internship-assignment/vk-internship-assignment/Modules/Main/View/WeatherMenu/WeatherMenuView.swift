@@ -26,11 +26,12 @@ final class WeatherMenuView: UIView {
     private let collectionView = SliderCollectionView(withPaging: false)
 
     private let highlightView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemThinMaterial)
+        let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
         view.layer.cornerRadius = UIConstants.HighlightView.cornerRadius
         view.alpha = UIConstants.HighlightView.alpha
         view.clipsToBounds = true
+        view.layer.cornerCurve = .continuous
         return view
     }()
 
@@ -226,7 +227,7 @@ private enum UIConstants {
 
     enum HighlightView {
         static let cornerRadius: CGFloat = 16
-        static let alpha: CGFloat = 0.8
+        static let alpha: CGFloat = 0.9
     }
 
     enum Cell {

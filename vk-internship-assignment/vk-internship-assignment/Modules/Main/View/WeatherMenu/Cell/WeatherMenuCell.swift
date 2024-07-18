@@ -83,12 +83,12 @@ private extension WeatherMenuCell {
 private enum UIConstants {
     enum Label {
         static let font: UIFont = .systemFont(ofSize: 16, weight: .medium)
-        static let color: UIColor = .label
+        static let color: UIColor = .white
     }
 
     enum Cell {
         static let cornerRadius: CGFloat = 16
-        static let backgroundColor: UIColor = .systemBackground.withAlphaComponent(0.1)
+        static let backgroundColor: UIColor = .black.withAlphaComponent(0.2)
     }
 
     enum Image {

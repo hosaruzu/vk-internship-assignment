@@ -17,11 +17,12 @@ final class WeatherSliderCell: UICollectionViewCell {
         view.clipsToBounds = true
         view.transform = UIConstants.BackgroundView.initialTransform
         view.alpha = 0
+        view.layer.cornerCurve = .continuous
         return view
     }()
 
     private let blurEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemThinMaterial)
+        let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
         return view
     }()
@@ -29,13 +30,13 @@ final class WeatherSliderCell: UICollectionViewCell {
     private let weatherLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title1)
-        label.textColor = .secondaryLabel
+        label.textColor = .white
         return label
     }()
 
     private let weatherImageView: UIImageView = {
         let image = UIImageView()
-        image.tintColor = .secondaryLabel
+        image.tintColor = .white
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -142,9 +143,9 @@ private enum UIConstants {
 
     enum BackgroundView {
         static let initialTransform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        static let cornerRadius: CGFloat = 16
-        static let widthMultipier: CGFloat = 0.7
-        static let heightMultipier: CGFloat = 0.5
+        static let cornerRadius: CGFloat = 26
+        static let widthMultipier: CGFloat = 0.6
+        static let heightMultipier: CGFloat = 0.7
         static let alpha: CGFloat = 0.9
     }
 
