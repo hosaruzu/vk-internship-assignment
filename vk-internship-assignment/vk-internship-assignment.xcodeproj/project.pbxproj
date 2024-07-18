@@ -26,6 +26,8 @@
 		0CD87AC82C47B22900BE8CBC /* WeatherSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC52C47B22900BE8CBC /* WeatherSliderView.swift */; };
 		0CD87ACA2C47F84100BE8CBC /* SliderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */; };
 		0CD87ACE2C480B2200BE8CBC /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87ACD2C480B2200BE8CBC /* UIColor+Ext.swift */; };
+		0CD87ADA2C4918C200BE8CBC /* LocaleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AD92C4918C200BE8CBC /* LocaleButton.swift */; };
+		0CD87ADC2C491B5400BE8CBC /* LocaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87ADB2C491B5400BE8CBC /* LocaleType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		0CD87AC52C47B22900BE8CBC /* WeatherSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSliderView.swift; sourceTree = "<group>"; };
 		0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCollectionView.swift; sourceTree = "<group>"; };
 		0CD87ACD2C480B2200BE8CBC /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		0CD87AD92C4918C200BE8CBC /* LocaleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleButton.swift; sourceTree = "<group>"; };
+		0CD87ADB2C491B5400BE8CBC /* LocaleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +201,7 @@
 			children = (
 				0C7E4CCD2C46AC390057BD66 /* Cell */,
 				0C7E4CCE2C46AC390057BD66 /* WeatherMenuView.swift */,
+				0CD87AD92C4918C200BE8CBC /* LocaleButton.swift */,
 			);
 			path = WeatherMenu;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				0C7E4CE02C46B01C0057BD66 /* Weather.swift */,
+				0CD87ADB2C491B5400BE8CBC /* LocaleType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -323,12 +329,14 @@
 				0CD87ACA2C47F84100BE8CBC /* SliderCollectionView.swift in Sources */,
 				0C7E4CC92C46A7DE0057BD66 /* MainAssembly.swift in Sources */,
 				0CD87AC72C47B22900BE8CBC /* WeatherSliderCell.swift in Sources */,
+				0CD87ADA2C4918C200BE8CBC /* LocaleButton.swift in Sources */,
 				0C7E4CDA2C46AD000057BD66 /* UIView+Ext.swift in Sources */,
 				0CD87ACE2C480B2200BE8CBC /* UIColor+Ext.swift in Sources */,
 				0C7E4CCB2C46A8160057BD66 /* MainPresenter.swift in Sources */,
 				0C7E4CD52C46AC390057BD66 /* WeatherMenuCell.swift in Sources */,
 				0C7E4CDE2C46AE2C0057BD66 /* String+Ext.swift in Sources */,
 				0C7E4CD62C46AC390057BD66 /* WeatherMenuView.swift in Sources */,
+				0CD87ADC2C491B5400BE8CBC /* LocaleType.swift in Sources */,
 				0C7E4CBE2C46A5CF0057BD66 /* BaseViewController.swift in Sources */,
 				0C7E4CC62C46A6DE0057BD66 /* MainViewController.swift in Sources */,
 				0C7E4CE12C46B01C0057BD66 /* Weather.swift in Sources */,

@@ -9,10 +9,13 @@ import UIKit
 
 final class MainViewController: BaseViewController {
 
+    let defaults = UserDefaults.standard
+
     // MARK: - Subviews
 
-    private var weatherCategoriesView = WeatherMenuView()
+    private let weatherCategoriesView = WeatherMenuView()
     private let weatherSliderView = WeatherSliderView()
+    private let localeButton = LocaleButton()
 
     // MARK: - Lifecycle
 
@@ -45,6 +48,11 @@ private extension MainViewController {
         weatherSliderView.onEndDragging = { [weak self] item in
             self?.weatherCategoriesView.selectItem(at: item)
         }
+
+        localeButton.onMenuAction = { [weak self] locale in
+            let string = locale.rawValue
+            self?.defaults.set(string, forKey: "locale")
+        }
     }
 }
 
@@ -54,7 +62,8 @@ private extension MainViewController {
     func setupSubviews() {
         view.addSubviews([
             weatherSliderView,
-            weatherCategoriesView
+            weatherCategoriesView,
+            localeButton
         ])
     }
 
@@ -68,7 +77,12 @@ private extension MainViewController {
             weatherCategoriesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             weatherCategoriesView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             weatherCategoriesView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            weatherCategoriesView.heightAnchor.constraint(equalToConstant: UIConstant.Categories.height)
+            weatherCategoriesView.heightAnchor.constraint(equalToConstant: UIConstant.Categories.height),
+
+            localeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            localeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            localeButton.heightAnchor.constraint(equalToConstant: 40),
+            localeButton.widthAnchor.constraint(equalToConstant: 54)
         ])
     }
 }
@@ -86,6 +100,8 @@ extension MainViewController: MainViewInput {
     func display(models: [WeatherKind], initialItem: Int) {
         weatherSliderView.display(models: models, initialItem: initialItem)
         weatherCategoriesView.display(models: models)
+        let title = defaults.object(forKey: "locale") as? String
+        localeButton.setTitle(title, for: .normal)
     }
 }
 
