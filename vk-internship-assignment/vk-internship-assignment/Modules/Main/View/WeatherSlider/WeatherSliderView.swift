@@ -165,15 +165,15 @@ private extension WeatherSliderView {
             UIColor(hexString: weather[initialItem].gradient.start).cgColor
         ]
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 1)
-        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.3)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.locations = [0, 1]
     }
 
     func animateGradient() {
         let colorAnimation = CABasicAnimation(keyPath: "locations")
-        colorAnimation.fromValue = [0, 0.4]
-        colorAnimation.toValue = [0, 0.9]
-        colorAnimation.duration = 1.5
+        colorAnimation.fromValue = [0, 0.2]
+        colorAnimation.toValue = [0, 1]
+        colorAnimation.duration = 2
         gradientLayer.add(colorAnimation, forKey: nil)
     }
 }
