@@ -10,7 +10,7 @@ import UIKit
 final class LocaleButton: UIButton {
 
     // MARK: - Callbacks
-    var onMenuAction: ((LocaleType) -> Void)?
+    var onMenuAction: (() -> Void)?
 
     // MARK: - Init
 
@@ -22,13 +22,22 @@ final class LocaleButton: UIButton {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Public
+
+    func setTitle(_ string: String) {
+        if string == "en" {
+            setTitle("🇺🇸", for: .normal)
+        } else if string == "ru" {
+            setTitle("🇷🇺", for: .normal)
+        }
+    }
 }
 
 // MARK: - Setup appearance
 
 private extension LocaleButton {
     func setupAppearance() {
-        setTitleColor(.white, for: .normal)
         backgroundColor = UIConstants.backgroundColor
         layer.cornerRadius = UIConstants.cornerRadius
         layer.cornerCurve = .continuous
@@ -40,20 +49,14 @@ private extension LocaleButton {
 
 private extension LocaleButton {
     func setupDropdown() {
-        menu = makeDropdown()
-        showsMenuAsPrimaryAction = true
+        addAction(makeAction(), for: .touchUpInside)
     }
 
-    func makeDropdown() -> UIMenu {
-        let english = UIAction(title: LocaleType.eng.name) { _ in
-            self.onMenuAction?(.eng)
-            self.setTitle(LocaleType.eng.name, for: .normal)
+    func makeAction() -> UIAction {
+        let action = UIAction { [weak self] _ in
+            self?.onMenuAction?()
         }
-        let russian = UIAction(title: LocaleType.rus.name) { _ in
-            self.onMenuAction?(.rus)
-            self.setTitle(LocaleType.rus.name, for: .normal)
-        }
-        return UIMenu(title: "", children: [english, russian])
+        return action
     }
 }
 
