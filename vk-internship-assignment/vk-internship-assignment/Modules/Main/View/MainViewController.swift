@@ -66,7 +66,9 @@ private extension MainViewController {
             weatherSliderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             weatherSliderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            weatherCategoriesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
+            weatherCategoriesView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: UIConstant.Common.verticalOffset),
             weatherCategoriesView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             weatherCategoriesView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             weatherCategoriesView.heightAnchor.constraint(equalToConstant: UIConstant.Categories.height),
@@ -74,7 +76,9 @@ private extension MainViewController {
             localeButton.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor,
                 constant: UIConstant.Button.leadingOffset),
-            localeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            localeButton.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -UIConstant.Common.verticalOffset),
             localeButton.heightAnchor.constraint(equalToConstant: UIConstant.Button.height),
             localeButton.widthAnchor.constraint(equalToConstant: UIConstant.Button.width)
         ])
@@ -114,5 +118,9 @@ private enum UIConstant {
         static let width: CGFloat = 40
         static let height: CGFloat = 50
         static let leadingOffset: CGFloat = 16
+    }
+
+    enum Common {
+        static let verticalOffset: CGFloat = 12
     }
 }
