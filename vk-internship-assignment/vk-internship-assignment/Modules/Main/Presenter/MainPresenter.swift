@@ -55,7 +55,7 @@ final class MainPresenter {
     // MARK: - Get current app locale
 
     private func getCurrentLanguage() -> String {
-        guard let languageCode = NSLocale.current.languageCode else { return "" }
+        guard let languageCode = NSLocale.current.languageCode else { return "en" }
         return languageCode
     }
 

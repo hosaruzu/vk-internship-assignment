@@ -1,5 +1,5 @@
 //
-//  WeatherType.swift
+//  WeatherKind.swift
 //  vk-internship-assignment
 //
 //  Created by Artem Tebenkov on 16.07.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Weather: String, CaseIterable {
+enum WeatherType: String {
     case clear
     case cloudy
     case rain
@@ -16,14 +16,14 @@ enum Weather: String, CaseIterable {
     case snow
 }
 
-extension Weather {
+extension WeatherType {
     var name: String {
         rawValue.capitalized.localized()
     }
 }
 
 struct WeatherKind {
-    let type: Weather
+    let type: WeatherType
     let imageName: String
     let isParticipating: Bool
     let gradient: (start: String, end: String)
@@ -67,8 +67,4 @@ extension WeatherKind {
             gradient: ("DFF6FF", "FDFDFD")
         )
     ]
-
-    func weatherFor(indexPath: IndexPath) -> WeatherKind {
-        return WeatherKind.mock[indexPath.item]
-    }
 }

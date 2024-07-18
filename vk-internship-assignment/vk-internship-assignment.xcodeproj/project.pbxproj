@@ -21,7 +21,7 @@
 		0C7E4CDA2C46AD000057BD66 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CD92C46AD000057BD66 /* UIView+Ext.swift */; };
 		0C7E4CDC2C46AD4B0057BD66 /* ReuseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CDB2C46AD4B0057BD66 /* ReuseIdentifiable.swift */; };
 		0C7E4CDE2C46AE2C0057BD66 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CDD2C46AE2C0057BD66 /* String+Ext.swift */; };
-		0C7E4CE12C46B01C0057BD66 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CE02C46B01C0057BD66 /* Weather.swift */; };
+		0C7E4CE12C46B01C0057BD66 /* WeatherKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CE02C46B01C0057BD66 /* WeatherKind.swift */; };
 		0CBAD3952C493A1B00F3683D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0CBAD3932C493A1B00F3683D /* Localizable.strings */; };
 		0CBAD3992C4950AC00F3683D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBAD3982C4950AC00F3683D /* Router.swift */; };
 		0CBAD39C2C49522800F3683D /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBAD39B2C49522800F3683D /* WeatherService.swift */; };
@@ -49,7 +49,7 @@
 		0C7E4CD92C46AD000057BD66 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		0C7E4CDB2C46AD4B0057BD66 /* ReuseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiable.swift; sourceTree = "<group>"; };
 		0C7E4CDD2C46AE2C0057BD66 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
-		0C7E4CE02C46B01C0057BD66 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		0C7E4CE02C46B01C0057BD66 /* WeatherKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherKind.swift; sourceTree = "<group>"; };
 		0CBAD3942C493A1B00F3683D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0CBAD3962C493A2600F3683D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0CBAD3982C4950AC00F3683D /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -91,9 +91,9 @@
 		0C7E4CA02C46894E0057BD66 /* vk-internship-assignment */ = {
 			isa = PBXGroup;
 			children = (
+				0C7E4CB52C46A34B0057BD66 /* App */,
 				0C7E4CBB2C46A5040057BD66 /* Modules */,
 				0C7E4CB72C46A4C90057BD66 /* Library */,
-				0C7E4CB52C46A34B0057BD66 /* App */,
 			);
 			path = "vk-internship-assignment";
 			sourceTree = "<group>";
@@ -180,8 +180,8 @@
 		0C7E4CC02C46A69A0057BD66 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0CD87AC62C47B22900BE8CBC /* WeatherSlider */,
 				0C7E4CD02C46AC390057BD66 /* WeatherMenu */,
+				0CD87AC62C47B22900BE8CBC /* WeatherSlider */,
 				0C7E4CC32C46A6C50057BD66 /* MainViewInput.swift */,
 				0C7E4CC52C46A6DE0057BD66 /* MainViewController.swift */,
 			);
@@ -217,7 +217,7 @@
 		0C7E4CDF2C46AFFD0057BD66 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0C7E4CE02C46B01C0057BD66 /* Weather.swift */,
+				0C7E4CE02C46B01C0057BD66 /* WeatherKind.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -265,7 +265,6 @@
 				0C7E4C9A2C46894E0057BD66 /* Sources */,
 				0C7E4C9B2C46894E0057BD66 /* Frameworks */,
 				0C7E4C9C2C46894E0057BD66 /* Resources */,
-				0C7E4CB62C46A3C60057BD66 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -323,27 +322,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0C7E4CB62C46A3C60057BD66 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		0C7E4C9A2C46894E0057BD66 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -364,7 +342,7 @@
 				0C7E4CD62C46AC390057BD66 /* WeatherMenuView.swift in Sources */,
 				0C7E4CBE2C46A5CF0057BD66 /* BaseViewController.swift in Sources */,
 				0C7E4CC62C46A6DE0057BD66 /* MainViewController.swift in Sources */,
-				0C7E4CE12C46B01C0057BD66 /* Weather.swift in Sources */,
+				0C7E4CE12C46B01C0057BD66 /* WeatherKind.swift in Sources */,
 				0C7E4CA22C46894E0057BD66 /* AppDelegate.swift in Sources */,
 				0C7E4CA42C46894E0057BD66 /* SceneDelegate.swift in Sources */,
 				0CBAD3992C4950AC00F3683D /* Router.swift in Sources */,

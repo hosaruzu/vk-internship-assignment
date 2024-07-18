@@ -9,7 +9,7 @@ import UIKit
 
 extension String {
     func defineWidth() -> CGFloat {
-        let font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        let font = UIFont.preferredFont(forTextStyle: .body)
         let attributes = [NSAttributedString.Key.font: font]
         return self.size(withAttributes: attributes).width
     }

@@ -14,10 +14,12 @@ protocol WeatherService {
 
 final class WeatherServiceImp: WeatherService {
 
+    // get mock data from model
     func obtainWeather() -> [WeatherKind] {
         return WeatherKind.mock
     }
 
+    // get random index of weather kind
     func obtainInitialWeatherItem() -> Int {
         return Int.random(in: 0..<WeatherKind.mock.count)
     }

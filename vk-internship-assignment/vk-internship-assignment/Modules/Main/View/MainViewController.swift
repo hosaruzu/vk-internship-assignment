@@ -37,7 +37,6 @@ private extension MainViewController {
 // MARK: - Setup bindings
 
 private extension MainViewController {
-
     func setupBindings() {
         weatherCategoriesView.onSectionChange = { [weak self] row in
             self?.weatherSliderView.scrollToItem(at: row)
@@ -67,7 +66,7 @@ private extension MainViewController {
             weatherSliderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             weatherSliderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            weatherCategoriesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            weatherCategoriesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
             weatherCategoriesView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             weatherCategoriesView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             weatherCategoriesView.heightAnchor.constraint(equalToConstant: UIConstant.Categories.height),
@@ -75,7 +74,7 @@ private extension MainViewController {
             localeButton.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor,
                 constant: UIConstant.Button.leadingOffset),
-            localeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            localeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
             localeButton.heightAnchor.constraint(equalToConstant: UIConstant.Button.height),
             localeButton.widthAnchor.constraint(equalToConstant: UIConstant.Button.width)
         ])

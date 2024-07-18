@@ -16,7 +16,7 @@ final class WeatherMenuView: UIView {
     // MARK: - Data source
 
     private var weather: [WeatherKind] = []
-    private var weatherType: Weather = .clear
+    private var weatherType: WeatherType = .clear
 
     // MARK: - Subviews
 
@@ -64,7 +64,7 @@ final class WeatherMenuView: UIView {
     }
 
     func selectItem(at row: Int) {
-        weatherType = Weather.allCases[row]
+        weatherType = weather[row].type
         collectionView(collectionView, didSelectItemAt: [0, row])
     }
 }

@@ -26,11 +26,7 @@ final class LocaleButton: UIButton {
     // MARK: - Public
 
     func setTitle(_ string: String) {
-        if string == "en" {
-            setTitle("🇺🇸", for: .normal)
-        } else if string == "ru" {
-            setTitle("🇷🇺", for: .normal)
-        }
+        setTitle(string.localized().uppercased(), for: .normal)
     }
 }
 

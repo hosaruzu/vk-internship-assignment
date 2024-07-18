@@ -9,6 +9,10 @@ import UIKit
 
 final class WeatherSliderView: UIView {
 
+    // MARK: - Callbacks
+
+    var onEndDragging: ((Int) -> Void)?
+
     // MARK: - Data source
 
     private var weather: [WeatherKind] = []
@@ -19,13 +23,11 @@ final class WeatherSliderView: UIView {
         }
     }
 
-    // MARK: - Callbacks
-
-    var onEndDragging: ((Int) -> Void)?
-
     // MARK: - Subviews
 
     private let collectionView = SliderCollectionView(withPaging: true)
+
+    // MARK: - Layers
 
     private let gradientLayer = CAGradientLayer()
 
@@ -42,10 +44,7 @@ final class WeatherSliderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func display(models: [WeatherKind], initialItem: Int) {
-        self.weather = models
-        self.initialItem = initialItem
-    }
+    // MARK: - Lifecycle
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -53,6 +52,11 @@ final class WeatherSliderView: UIView {
     }
 
     // MARK: - Public
+
+    func display(models: [WeatherKind], initialItem: Int) {
+        self.weather = models
+        self.initialItem = initialItem
+    }
 
     func scrollToItem(at row: Int) {
         initialItem = row
@@ -63,7 +67,6 @@ final class WeatherSliderView: UIView {
 // MARK: - Initialize collection view
 
 private extension WeatherSliderView {
-
     func setupCollectionViewDelegatesAndRegistrations() {
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -93,7 +96,6 @@ private extension WeatherSliderView {
 // MARK: - UICollectionViewDataSource
 
 extension WeatherSliderView: UICollectionViewDataSource {
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         weather.count
     }
@@ -153,7 +155,6 @@ extension WeatherSliderView: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension WeatherSliderView: UICollectionViewDelegateFlowLayout {
-
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -171,16 +172,33 @@ private extension WeatherSliderView {
             UIColor(hexString: weather[initialItem].gradient.end).cgColor,
             UIColor(hexString: weather[initialItem].gradient.start).cgColor
         ]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 1)
-        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.locations = [0, 1]
+        gradientLayer.startPoint = UIConstants.Gradient.startPoint
+        gradientLayer.endPoint = UIConstants.Gradient.endPoint
+        gradientLayer.locations = UIConstants.Gradient.locations
     }
 
     func animateGradient() {
-        let colorAnimation = CABasicAnimation(keyPath: "locations")
-        colorAnimation.fromValue = [0, 0.2]
-        colorAnimation.toValue = [0, 1]
-        colorAnimation.duration = 2
+        let colorAnimation = CABasicAnimation(keyPath: UIConstants.Animation.name)
+        colorAnimation.fromValue = UIConstants.Animation.fromValue
+        colorAnimation.toValue = UIConstants.Animation.toValue
+        colorAnimation.duration = UIConstants.Animation.duration
         gradientLayer.add(colorAnimation, forKey: nil)
+    }
+}
+
+// MARK: - UI constants
+
+private enum UIConstants {
+    enum Gradient {
+        static let startPoint: CGPoint = .init(x: 0.0, y: 1)
+        static let endPoint: CGPoint = .init(x: 0.0, y: 0.5)
+        static let locations: [NSNumber] = [0, 1]
+    }
+
+    enum Animation {
+        static let name = "locations"
+        static let fromValue: [Double] = [0, 0.2]
+        static let toValue: [Double] = [0, 1]
+        static let duration: CFTimeInterval = 2
     }
 }
