@@ -9,16 +9,13 @@ import UIKit
 
 final class WeatherMenuView: UIView {
 
-    // MARK: - Data source
-
-    private var weather: [WeatherKind] = []
-
     // MARK: - Callbacks
 
     var onSectionChange: ((Int) -> Void)?
 
     // MARK: - Data source
 
+    private var weather: [WeatherKind] = []
     private var weatherType: Weather = .clear
 
     // MARK: - Subviews
@@ -148,7 +145,7 @@ extension WeatherMenuView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width = Weather.allCases[indexPath.item].rawValue.defineWidth()
+        let width = weather[indexPath.item].type.name.localized().defineWidth()
         return CGSize(width: width + UIConstants.Cell.horizontalPadding, height: collectionView.frame.height)
     }
 
@@ -193,7 +190,7 @@ private extension WeatherMenuView {
     }
 
     func initDynamicConstraints() {
-        let initialWidth = weatherType.rawValue.defineWidth()
+        let initialWidth = weatherType.name.localized().defineWidth()
         widthConstraint = highlightView.widthAnchor.constraint(equalToConstant: initialWidth)
         leadingConstraint = highlightView.leadingAnchor.constraint(equalTo: leadingAnchor)
         widthConstraint.isActive = true

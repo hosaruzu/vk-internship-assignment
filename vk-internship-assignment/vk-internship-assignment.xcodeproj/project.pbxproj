@@ -22,12 +22,14 @@
 		0C7E4CDC2C46AD4B0057BD66 /* ReuseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CDB2C46AD4B0057BD66 /* ReuseIdentifiable.swift */; };
 		0C7E4CDE2C46AE2C0057BD66 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CDD2C46AE2C0057BD66 /* String+Ext.swift */; };
 		0C7E4CE12C46B01C0057BD66 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E4CE02C46B01C0057BD66 /* Weather.swift */; };
+		0CBAD3952C493A1B00F3683D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0CBAD3932C493A1B00F3683D /* Localizable.strings */; };
+		0CBAD3992C4950AC00F3683D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBAD3982C4950AC00F3683D /* Router.swift */; };
+		0CBAD39C2C49522800F3683D /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBAD39B2C49522800F3683D /* WeatherService.swift */; };
 		0CD87AC72C47B22900BE8CBC /* WeatherSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC32C47B22900BE8CBC /* WeatherSliderCell.swift */; };
 		0CD87AC82C47B22900BE8CBC /* WeatherSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC52C47B22900BE8CBC /* WeatherSliderView.swift */; };
 		0CD87ACA2C47F84100BE8CBC /* SliderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */; };
 		0CD87ACE2C480B2200BE8CBC /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87ACD2C480B2200BE8CBC /* UIColor+Ext.swift */; };
 		0CD87ADA2C4918C200BE8CBC /* LocaleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87AD92C4918C200BE8CBC /* LocaleButton.swift */; };
-		0CD87ADC2C491B5400BE8CBC /* LocaleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD87ADB2C491B5400BE8CBC /* LocaleType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,12 +50,15 @@
 		0C7E4CDB2C46AD4B0057BD66 /* ReuseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiable.swift; sourceTree = "<group>"; };
 		0C7E4CDD2C46AE2C0057BD66 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		0C7E4CE02C46B01C0057BD66 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		0CBAD3942C493A1B00F3683D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0CBAD3962C493A2600F3683D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0CBAD3982C4950AC00F3683D /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		0CBAD39B2C49522800F3683D /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		0CD87AC32C47B22900BE8CBC /* WeatherSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSliderCell.swift; sourceTree = "<group>"; };
 		0CD87AC52C47B22900BE8CBC /* WeatherSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherSliderView.swift; sourceTree = "<group>"; };
 		0CD87AC92C47F84100BE8CBC /* SliderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCollectionView.swift; sourceTree = "<group>"; };
 		0CD87ACD2C480B2200BE8CBC /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		0CD87AD92C4918C200BE8CBC /* LocaleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleButton.swift; sourceTree = "<group>"; };
-		0CD87ADB2C491B5400BE8CBC /* LocaleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +101,7 @@
 		0C7E4CB52C46A34B0057BD66 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				0CBAD3932C493A1B00F3683D /* Localizable.strings */,
 				0C7E4CAF2C4689500057BD66 /* Info.plist */,
 				0C7E4CAC2C4689500057BD66 /* LaunchScreen.storyboard */,
 				0C7E4CAA2C4689500057BD66 /* Assets.xcassets */,
@@ -153,6 +159,8 @@
 		0C7E4CBC2C46A5260057BD66 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				0CBAD39A2C49521F00F3683D /* Services */,
+				0CBAD3972C4950A500F3683D /* Router */,
 				0C7E4CDF2C46AFFD0057BD66 /* Models */,
 				0C7E4CC72C46A7D10057BD66 /* Assembly */,
 				0C7E4CC02C46A69A0057BD66 /* View */,
@@ -210,9 +218,24 @@
 			isa = PBXGroup;
 			children = (
 				0C7E4CE02C46B01C0057BD66 /* Weather.swift */,
-				0CD87ADB2C491B5400BE8CBC /* LocaleType.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		0CBAD3972C4950A500F3683D /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				0CBAD3982C4950AC00F3683D /* Router.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		0CBAD39A2C49521F00F3683D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0CBAD39B2C49522800F3683D /* WeatherService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		0CD87AC42C47B22900BE8CBC /* Cell */ = {
@@ -275,6 +298,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 0C7E4C952C46894E0057BD66;
 			productRefGroup = 0C7E4C9F2C46894E0057BD66 /* Products */;
@@ -292,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C7E4CAB2C4689500057BD66 /* Assets.xcassets in Resources */,
+				0CBAD3952C493A1B00F3683D /* Localizable.strings in Resources */,
 				0C7E4CAE2C4689500057BD66 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CBAD39C2C49522800F3683D /* WeatherService.swift in Sources */,
 				0C7E4CC42C46A6C50057BD66 /* MainViewInput.swift in Sources */,
 				0C7E4CDC2C46AD4B0057BD66 /* ReuseIdentifiable.swift in Sources */,
 				0CD87ACA2C47F84100BE8CBC /* SliderCollectionView.swift in Sources */,
@@ -336,12 +362,12 @@
 				0C7E4CD52C46AC390057BD66 /* WeatherMenuCell.swift in Sources */,
 				0C7E4CDE2C46AE2C0057BD66 /* String+Ext.swift in Sources */,
 				0C7E4CD62C46AC390057BD66 /* WeatherMenuView.swift in Sources */,
-				0CD87ADC2C491B5400BE8CBC /* LocaleType.swift in Sources */,
 				0C7E4CBE2C46A5CF0057BD66 /* BaseViewController.swift in Sources */,
 				0C7E4CC62C46A6DE0057BD66 /* MainViewController.swift in Sources */,
 				0C7E4CE12C46B01C0057BD66 /* Weather.swift in Sources */,
 				0C7E4CA22C46894E0057BD66 /* AppDelegate.swift in Sources */,
 				0C7E4CA42C46894E0057BD66 /* SceneDelegate.swift in Sources */,
+				0CBAD3992C4950AC00F3683D /* Router.swift in Sources */,
 				0CD87AC82C47B22900BE8CBC /* WeatherSliderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +383,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		0CBAD3932C493A1B00F3683D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0CBAD3942C493A1B00F3683D /* en */,
+				0CBAD3962C493A2600F3683D /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -365,6 +400,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -428,6 +464,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

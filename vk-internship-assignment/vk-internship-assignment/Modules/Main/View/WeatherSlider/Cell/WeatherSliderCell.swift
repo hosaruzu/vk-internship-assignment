@@ -137,8 +137,8 @@ private extension WeatherSliderCell {
 
 private enum UIConstants {
     enum Animation {
-        static let duration: TimeInterval = 0.2
-        static let delay: TimeInterval = 0.3
+        static let duration: TimeInterval = 0.25
+        static let delay: TimeInterval = 0.35
     }
 
     enum BackgroundView {

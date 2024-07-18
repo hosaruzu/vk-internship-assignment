@@ -138,8 +138,15 @@ extension WeatherSliderView: UICollectionViewDelegate {
         targetContentOffset: UnsafeMutablePointer<CGPoint>
     ) {
         let offset = IndexPath(item: Int(targetContentOffset.pointee.x / frame.width), section: 0)
-        initialItem = offset.item
-        onEndDragging?(offset.item)
+        performSlidingWith(offset)
+    }
+
+    /// prevent performing dragging and animations on first item to left and last item to right
+    func performSlidingWith(_ offset: IndexPath) {
+        if initialItem > offset.item || initialItem < offset.item {
+            initialItem = offset.item
+            onEndDragging?(offset.item)
+        }
     }
 }
 

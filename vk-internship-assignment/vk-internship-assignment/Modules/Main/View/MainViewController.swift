@@ -9,8 +9,6 @@ import UIKit
 
 final class MainViewController: BaseViewController {
 
-    let defaults = UserDefaults.standard
-
     // MARK: - Subviews
 
     private let weatherCategoriesView = WeatherMenuView()
@@ -48,11 +46,6 @@ private extension MainViewController {
         weatherSliderView.onEndDragging = { [weak self] item in
             self?.weatherCategoriesView.selectItem(at: item)
         }
-
-        localeButton.onMenuAction = { [weak self] locale in
-            let string = locale.rawValue
-            self?.defaults.set(string, forKey: "locale")
-        }
     }
 }
 
@@ -79,10 +72,12 @@ private extension MainViewController {
             weatherCategoriesView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             weatherCategoriesView.heightAnchor.constraint(equalToConstant: UIConstant.Categories.height),
 
-            localeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            localeButton.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: UIConstant.Button.leadingOffset),
             localeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            localeButton.heightAnchor.constraint(equalToConstant: 40),
-            localeButton.widthAnchor.constraint(equalToConstant: 54)
+            localeButton.heightAnchor.constraint(equalToConstant: UIConstant.Button.height),
+            localeButton.widthAnchor.constraint(equalToConstant: UIConstant.Button.width)
         ])
     }
 }
@@ -90,18 +85,22 @@ private extension MainViewController {
 // MARK: - MainViewInput
 
 extension MainViewController: MainViewInput {
-    func setInitialWeather(_ row: Int) {
-        Task {
-            weatherCategoriesView.selectItem(at: row)
-            weatherSliderView.scrollToItem(at: row)
+    var onLocaleButtonTap: (() -> Void)? {
+        get {
+            localeButton.onMenuAction
+        }
+        set {
+            localeButton.onMenuAction = newValue
         }
     }
 
-    func display(models: [WeatherKind], initialItem: Int) {
+    func display(models: [WeatherKind], initialItem: Int, locale: String) {
         weatherSliderView.display(models: models, initialItem: initialItem)
         weatherCategoriesView.display(models: models)
-        let title = defaults.object(forKey: "locale") as? String
-        localeButton.setTitle(title, for: .normal)
+        Task {
+            weatherCategoriesView.selectItem(at: initialItem)
+        }
+        localeButton.setTitle(locale)
     }
 }
 
@@ -110,5 +109,11 @@ extension MainViewController: MainViewInput {
 private enum UIConstant {
     enum Categories {
         static let height: CGFloat = 60
+    }
+
+    enum Button {
+        static let width: CGFloat = 40
+        static let height: CGFloat = 50
+        static let leadingOffset: CGFloat = 16
     }
 }
